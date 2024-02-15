@@ -27,7 +27,7 @@ def main(page : ft.Page):
             page.update()
         else:
             value = txt_name.value
-            response(value)
+            page.add(response(value))
 
     txt_name = ft.TextField(label="Ingresa el elemento que desea buscar dentro de la imagen")
 
