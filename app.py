@@ -3,12 +3,6 @@ import google.generativeai as genai
 import PIL.Image
 import flet as ft
 
-#crea la interfaz
-def main(page : ft.Page):
-    pass
-    
-#inicializa la interfaz
-ft.app(target=main)
 
 def obtener_api_key ():
     with open ('config.json', 'r') as f:
@@ -25,9 +19,29 @@ img = PIL.Image.open('image.jpg')
 #crear modelo
 model = genai.GenerativeModel('gemini-pro-vision')
 
-#generar contenido
-response = model.generate_content(["Write a short, engaging blog post based on this picture. It should include a description of the meal in the photo and talk about my journey meal prepping.", img])
-response.resolve()
+#crea la interfaz
+def main(page : ft.Page):
+    def btn_click(e):
+        if not txt_name.value:
+            txt_name.error_text = "Por favor ingrese un elemento a buscar"
+            page.update()
+        else:
+            value = txt_name.value
+            page.add(response(value))
 
-#imprimir
-print(response.text)
+    txt_name = ft.TextField(label="Ingresa el elemento que desea buscar dentro de la imagen")
+
+    page.add(txt_name, ft.ElevatedButton("buscar elemento!", on_click=btn_click))
+
+def response(quest):
+    #generar contenido
+    response = model.generate_content([quest, img])
+    response.resolve()
+
+    #imprimir
+    t = ft.Text(value=response.text, color="green")
+
+
+#inicializa la interfaz
+ft.app(target=main)
+
