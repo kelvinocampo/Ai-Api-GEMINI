@@ -3,7 +3,7 @@ from PIL import Image
 
 genai.configure(api_key='AIzaSyALn5MDkG4cApNZ9bLRdFtPCoF0v5nleFY')
 
-img = Image.open('./mango.jfif')
+img = Image.open('./image.jpg')
 
 model = genai.GenerativeModel('gemini-pro-vision')
 
